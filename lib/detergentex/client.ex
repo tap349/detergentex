@@ -2,6 +2,7 @@ defmodule Detergentex.Client do
   use GenServer
 
   def start_link do
+    :ssl.start()
     :inets.start()
     GenServer.start_link(__MODULE__, {}, [name: :detergent_client])
   end
