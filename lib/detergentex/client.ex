@@ -5,7 +5,15 @@ defmodule Detergentex.Client do
   require Record
   import Record, only: [defrecord: 2, extract: 2]
 
-  defrecord :call_opts, extract(:call_opts, from_lib: "detergent/include/detergent.hrl")
+  # https://hexdocs.pm/elixir/Record.html#defrecord/3-defining-extracted-records-with-anonymous-functions-in-the-values
+  defrecord :call_opts,
+    extract(:call_opts, from_lib: "detergent/include/detergent.hrl")
+    |> Keyword.merge(
+      request_logger: &__MODULE__.default_logger/1,
+      response_logger: &__MODULE__.default_logger/1
+    )
+
+  def default_logger(_), do: :ok
 
   def start_link do
     :ssl.start()
@@ -18,6 +26,7 @@ defmodule Detergentex.Client do
 
     method_to_call = to_charlist(method)
     params = convert_to_detergent_params(params)
+
     call_options =
       call_options
       |> convert_to_detergent_params
@@ -29,8 +38,8 @@ defmodule Detergentex.Client do
   def init_model(wsdl_url, prefix, http_client_options) do
     wsdl_url = to_charlist(wsdl_url)
     prefix = to_charlist(prefix)
-    http_client_options = convert_to_detergent_params(http_client_options)
 
+    http_client_options = convert_to_detergent_params(http_client_options)
     :detergent.initModel(wsdl_url, prefix, http_client_options)
   end
 

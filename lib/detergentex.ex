@@ -14,7 +14,16 @@ defmodule Detergentex do
     Detergentex.Client.call_service(wsdl, method, params, call_options)
   end
 
-  def init_model(wsdl_url, prefix \\ 'p', http_client_options \\ []) do
+  def init_model(wsdl_url) do
+    init_model(wsdl_url, 'p', [])
+  end
+  def init_model(wsdl_url, http_client_options) when is_list(http_client_options) do
+    init_model(wsdl_url, 'p', http_client_options)
+  end
+  def init_model(wsdl_url, prefix) do
+    init_model(wsdl_url, prefix, [])
+  end
+  def init_model(wsdl_url, prefix, http_client_options) do
     Detergentex.Client.init_model(wsdl_url, prefix, http_client_options)
   end
 
