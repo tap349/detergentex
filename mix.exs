@@ -35,7 +35,7 @@ defmodule Detergentex.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:detergent, github: "tap349/detergent" },
+      {:detergent, github: "tap349/detergent", branch: "feature/http-client-options" },
       {:erlsom, github: "willemdj/erlsom"}
     ]
   end
