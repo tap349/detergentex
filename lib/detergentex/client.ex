@@ -22,7 +22,7 @@ defmodule Detergentex.Client do
   end
 
   def call_service(wsdl, method, params, call_options) do
-    wsdl = if not is_wsdl(wsdl), do: to_charlist(wsdl)
+    wsdl = if not is_wsdl(wsdl), do: to_charlist(wsdl), else: wsdl
 
     method_to_call = to_charlist(method)
     params = convert_to_detergent_params(params)
